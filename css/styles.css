@@ -28,6 +28,10 @@ table {
     height: 100%;
 }
 
+button {
+    background-color: #fff;
+}
+
 #container-contract,
 #container-address {
     font-size: x-small;

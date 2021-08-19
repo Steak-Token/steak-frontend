@@ -1,9 +1,14 @@
-var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance, linkBurn;
+var screenConnected, screenHelp;
+var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance;
+var linkHelp, linkCloseHelp, linkBurn;
 var btnAdd, btnConnect, btnStake, btnClaim;
 
 var intervalClaim;
 
 async function initSteak() {
+    screenConnected = $("#screen-connected");
+    screenHelp = $("#screen-help");
+
     containerTotal = $("#container-total");
     containerWaitingComplete = $("#container-waiting-complete");
     containerWaiting = $("#container-waiting");
@@ -15,6 +20,8 @@ async function initSteak() {
     btnStake = $("#btn-stake");
     btnClaim = $("#btn-claim");
 
+    linkHelp = $("#link-help");
+    linkCloseHelp = $("#link-close-help");
     linkBurn = $("#link-burn");
 
     linkBurn.on("click", function() {
@@ -23,6 +30,16 @@ async function initSteak() {
 
     btnAdd.on("click", function() {
         addToken();
+    });
+
+    linkHelp.on("click", function() {
+        screenConnected.hide();
+        screenHelp.show();
+    });
+
+    linkCloseHelp.on("click", function() {
+        screenConnected.show();
+        screenHelp.hide();
     });
 
     containerAddress.text(selectedAccount);
