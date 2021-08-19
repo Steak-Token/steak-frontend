@@ -71,7 +71,21 @@ async function fetchAccountData() {
     web3 = new Web3(provider);
     steak = new web3.eth.Contract(contract.Steak.abi, steakAddress);
 
+    steak.events.StakeOn(function(error, result) {
+        if (!error) {
+            reloadSteak();
+        } else
+            console.log(error);
+    });
+
     steak.events.Claimed(function(error, result) {
+        if (!error) {
+            reloadSteak();
+        } else
+            console.log(error);
+    });
+
+    steak.events.Burned(function(error, result) {
         if (!error) {
             reloadSteak();
         } else

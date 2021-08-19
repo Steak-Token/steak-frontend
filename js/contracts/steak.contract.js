@@ -277,10 +277,30 @@ contract.Steak = {
                 "name": "staker",
                 "type": "address"
             }],
+            "name": "StakeOn",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{
+                "indexed": false,
+                "name": "staker",
+                "type": "address"
+            }],
             "name": "Claimed",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{
+                "indexed": false,
+                "name": "staker",
+                "type": "address"
+            }],
+            "name": "Burned",
             "type": "event"
         }
     ],
 
-    address: "0x5388D7eFCDe0B491468175100c627A9CbBe6024A"
+    address: "0x6F52FcF33c5110FE90BeD12618e3FbA67FeF6745"
 };

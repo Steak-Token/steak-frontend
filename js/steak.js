@@ -1,4 +1,4 @@
-var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance;
+var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance, linkBurn;
 var btnAdd, btnConnect, btnStake, btnClaim;
 
 var intervalClaim;
@@ -14,6 +14,12 @@ async function initSteak() {
     btnConnect = $("#btn-connect");
     btnStake = $("#btn-stake");
     btnClaim = $("#btn-claim");
+
+    linkBurn = $("#link-burn");
+
+    linkBurn.on("click", function() {
+        dialog.burn.show(selectedAccount);
+    });
 
     btnAdd.on("click", function() {
         addToken();
@@ -61,6 +67,13 @@ function reloadSteak() {
     clearInterval(intervalClaim);
     containerWaiting.text("0");
     initSteak();
+}
+
+async function burn(amount) {
+    amount = amount * 1000000000000000000;
+    await steak.methods.burn(Web3.utils.toBN(amount)).send({
+        from: selectedAccount
+    });
 }
 
 function fixDecimals(balance) {
