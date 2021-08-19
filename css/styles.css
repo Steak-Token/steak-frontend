@@ -33,6 +33,10 @@ table {
     font-size: x-small;
 }
 
+.footer {
+    font-size: xx-small;
+}
+
 .container {
     margin: 1em;
 }
@@ -49,6 +53,18 @@ table {
     border: none;
     position: absolute;
     visibility: hidden;
+}
+
+.right {
+    text-align: right;
+    align-content: right;
+    align-self: auto;
+}
+
+.left {
+    text-align: left;
+    align-content: left;
+    align-self: auto;
 }
 
 .center {
