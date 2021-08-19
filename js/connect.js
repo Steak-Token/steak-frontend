@@ -121,10 +121,12 @@ async function fetchAccountData() {
 
 async function isCorrectChain(id) {
     if (id == "56") { // Productive
+        $("#container-header").show();
         $("#screen-connected").show();
         $("#screen-wrong-chain").hide();
         return true;
     } else {
+        $("#container-header").hide();
         $("#screen-connected").hide();
         $("#screen-wrong-chain").show();
 

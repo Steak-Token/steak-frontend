@@ -18,11 +18,13 @@
 </head>
 
 <body>
-    <table>
+    <table id="table-screen">
         <tr>
             <td>
-                <h1 class="center"><span>🥩</span> STEAK <span style="display:inline-block; transform:scaleX(-1);">🥩</span></h1>
-                <h3 class="center">The self staking token!</h3>
+                <div id="container-header">
+                    <h1 class="center"><span>🥩</span> STEAK <span style="display:inline-block; transform:scaleX(-1);">🥩</span></h1>
+                    <h3 class="center">The self staking token!</h3>
+                </div>
                 <div id="screen-connected" class="center" hidden>
                     <div id="container-contract" class="center container">
                         <div><b>Contract:</b> <a href="https://bscscan.com/address/0x6F52FcF33c5110FE90BeD12618e3FbA67FeF6745" target="_blank">0x6F52FcF33c5110FE90BeD12618e3FbA67FeF6745</a></div>
@@ -52,40 +54,43 @@
                     <div class="footer center container">
                         <a href="https://github.com/Steak-Token" target="_blank">Github</a> | <a href="https://twitter.com/steak_token" target="_blank">Twitter</a> | <a id="link-help">Help</a>
                     </div>
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="left"><a id="link-burn">Burn</a></td>
-                        </tr>
-                    </table>
 
-                    <div id="screen-help" class="center" hidden>
-                        <div class="border">
-                            <div><b>What is STEAK?</b></div>
-                            <div>Stake is a ERC20 token with staking function on the Binance Smart Chain. If you participate in staking and have some STAKE in your wallet, your STEAK will automatically stake over time.</div>
-                            <div>To get your staked token, you or someone else have to click the claim button.</div>
-                            <br>
-                            <div><b>Claim Button</b></div>
-                            <div>If you or someone else clicks on the claim button, all staker get rewarded with their staked token. Staked token will only cashed out trough the claim button.</div>
-                            <br>
-                            <div><b>Burn</b></div>
-                            <div>If you think you got too much STEAK or if you are mad, you can burn your STEAK. Burned STEAK will be destroyed forever and irreversible, so think twice if you want burn your STEAK.</div>
-                            <br>
-                            <div><b>PancakeSwap</b></div>
-                            <div>If you wish to exchange your STEAK, you can do this on <a href="" target="_blank">PancakeSwap</a>. All income that is generated flows into STEAK's liquidity!</div>
-                        </div>
-                        <div class="container"><button id="link-close-help">Close</button></div>
+                    <div class="part100">
+                        <div class="part25"></div>
+                        <div class="part25"></div>
+                        <div class="part25 left"><a id="link-burn">🔥</a></div>
+                        <div class="part25"></div>
                     </div>
+                </div>
 
-                    <div id="screen-wrong-chain" class="center" hidden>
-                        <img alt="Ethereum Logo" src="images/logo-binance-smart-chain.svg" /><br>Wrong chain, please switch to Binance Smart Chain.
-                        <br><br>
-                        <button onclick="onDisconnect(); location.reload(true);">Reload</button>
+                <div id="screen-help" class="center" hidden>
+                    <div class="border">
+                        <div><b>What is STEAK?</b></div>
+                        <div>Stake is a ERC20 token with staking function on the Binance Smart Chain. If you participate in staking and have some STAKE in your wallet, your STEAK will automatically stake over time.</div>
+                        <div>To get your staked token, you or someone else have to click the claim button.</div>
+                        <br>
+                        <div><b>Claim Button</b></div>
+                        <div>If you or someone else clicks on the claim button, all staker get rewarded with their staked token. Staked token will only cashed out trough the claim button.</div>
+                        <br>
+                        <div><b>🔥 Burn</b></div>
+                        <div>If you think you got too much STEAK or if you are mad, you can burn your STEAK. Burned STEAK will be destroyed forever and irreversible, so think twice if you want burn your STEAK.</div>
+                        <br>
+                        <div><b>PancakeSwap</b></div>
+                        <div>If you wish to exchange your STEAK, you can do this on <a href="" target="_blank">PancakeSwap</a>. All income that is generated flows into STEAK's liquidity!</div>
                     </div>
+                    <div class="container"><button id="link-close-help">Close</button></div>
+                </div>
 
-                    <div id="dialog" title="" class="hidden"></div>
+                <div id="screen-wrong-chain" class="center" hidden>
+                    <img alt="Ethereum Logo" src="images/logo-binance-smart-chain.svg" /><br>Wrong chain, please connect to Binance Smart Chain.
+                    <br>
+                    <br>
+                    <a href="https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain" target="_blank">How to connect? Click here!</a>
+                    <br><br>
+                    <button onclick="onDisconnect(); location.reload(true);">Reload</button>
+                </div>
+
+                <div id="dialog" title="" class="hidden"></div>
                 </div>
             </td>
         </tr>
