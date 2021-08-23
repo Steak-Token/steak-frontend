@@ -9,6 +9,8 @@ var intervalClaim;
 var decimals = 1000000000000000000;
 
 async function initSteak() {
+    $(document).tooltip();
+
     screenConnected = $("#screen-connected");
     screenMarket = $("#screen-market");
     screenHelp = $("#screen-help");
@@ -80,8 +82,10 @@ async function initSteak() {
     if (inStaking) {
         containerWaitingComplete.show();
         btnClaim.show();
+        btnStake.hide()
     } else {
         containerWaitingComplete.hide();
+        btnClaim.hide();
         btnStake.show();
     }
 
@@ -90,7 +94,7 @@ async function initSteak() {
     intervalClaim = setInterval(async function() {
         // block number of latest mined block
         web3.eth.getBlockNumber().then(data => {
-            containerTotal.text(fixDecimals(total) + (data - block));
+            containerTotal.text(fixDecimals(total));
             containerWaiting.text((data - block) * (balance / total));
         });
 

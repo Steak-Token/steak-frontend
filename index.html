@@ -26,6 +26,7 @@
                     <h3 class="center">The self staking token!</h3>
                 </div>
                 <div id="screen-connected" class="center" hidden>
+                    <div class="container"><a title="Coming soon!">🎮 Games</a> | <a id="link-market">🏧 Market</a> | <a id="link-help">❓ Help</a></div>
                     <div id="container-contract" class="center container">
                         <div><b>Contract:</b> <a href="https://bscscan.com/address/0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81" target="_blank">0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81</a></div>
                         <div><b>Current Total:</b> <span id="container-total">🗘</span> STEAK</div>
@@ -40,25 +41,26 @@
                         <div class="container">
                             <div><b>Your Balance:</b> <span id="container-balance">🗘</span> STEAK</div>
                             <button id="btn-stake" hidden>Click here to participate in staking</button>
-                            <div id="container-waiting-complete" class="center">
-                                <div>+<b><span id="container-waiting">🗘</span> STEAK</b> are waiting for claim</div>
-                                <br>
-                                <button id="btn-claim" hidden>Claim now!</button>
-                            </div>
+                            <p>
+                                <div id="container-waiting-complete" class="center">
+                                    <div>+<b><span id="container-waiting">🗘</span> STEAK</b><br>are waiting for claim, butcher now!</div>
+                                    <br>
+                                    <button id="btn-claim" hidden>Butcher 🐄</button>
+                                </div>
+                            </p>
                         </div>
                     </div>
 
                     <div class="center"><button id="btn-add">
-                        <svg viewBox="0 0 40 40" color="text" width="12px" xmlns="http://www.w3.org/2000/svg" class="sc-bdnxRM fbnJlb"><path d="M36.0112 3.33337L22.1207 13.6277L24.7012 7.56091L36.0112 3.33337Z" fill="#E17726"></path><path d="M4.00261 3.33337L17.7558 13.7238L15.2989 7.56091L4.00261 3.33337Z" fill="#E27625"></path><path d="M31.0149 27.2023L27.3227 32.8573L35.2287 35.0397L37.4797 27.3258L31.0149 27.2023Z" fill="#E27625"></path><path d="M2.53386 27.3258L4.77116 35.0397L12.6772 32.8573L8.9987 27.2023L2.53386 27.3258Z" fill="#E27625"></path><path d="M12.2518 17.6496L10.0419 20.9712L17.8793 21.3281L17.6048 12.8867L12.2518 17.6496Z" fill="#E27625"></path><path d="M27.762 17.6494L22.3129 12.7905L22.1207 21.3279L29.9581 20.9711L27.762 17.6494Z" fill="#E27625"></path><path d="M12.6772 32.8574L17.3989 30.5652L13.336 27.3809L12.6772 32.8574Z" fill="#E27625"></path><path d="M22.6009 30.5652L27.3226 32.8574L26.6637 27.3809L22.6009 30.5652Z" fill="#E27625"></path><path d="M27.3226 32.8575L22.6009 30.5653L22.9715 33.6399L22.9303 34.9301L27.3226 32.8575Z" fill="#D5BFB2"></path><path d="M12.6772 32.8575L17.0694 34.9301L17.042 33.6399L17.3989 30.5653L12.6772 32.8575Z" fill="#D5BFB2"></path><path d="M17.1518 25.3495L13.2262 24.1965L15.9988 22.92L17.1518 25.3495Z" fill="#233447"></path><path d="M22.848 25.3495L24.001 22.92L26.801 24.1965L22.848 25.3495Z" fill="#233447"></path><path d="M12.6773 32.8573L13.3635 27.2023L8.99876 27.3258L12.6773 32.8573Z" fill="#CC6228"></path><path d="M26.6364 27.2023L27.3227 32.8573L31.0149 27.3258L26.6364 27.2023Z" fill="#CC6228"></path><path d="M29.9581 20.9709L22.1207 21.3278L22.8482 25.3495L24.0011 22.92L26.8012 24.1965L29.9581 20.9709Z" fill="#CC6228"></path><path d="M13.2263 24.1965L15.9989 22.92L17.1519 25.3495L17.8793 21.3278L10.0419 20.9709L13.2263 24.1965Z" fill="#CC6228"></path><path d="M10.0419 20.9709L13.3361 27.3809L13.2263 24.1965L10.0419 20.9709Z" fill="#E27525"></path><path d="M26.8011 24.1965L26.6638 27.3809L29.958 20.9709L26.8011 24.1965Z" fill="#E27525"></path><path d="M17.8793 21.3278L17.1519 25.3494L18.0715 30.0985L18.2637 23.8396L17.8793 21.3278Z" fill="#E27525"></path><path d="M22.1205 21.3278L21.7499 23.8258L21.9283 30.0985L22.848 25.3494L22.1205 21.3278Z" fill="#E27525"></path><path d="M22.848 25.3496L21.9284 30.0987L22.601 30.5654L26.6638 27.381L26.8011 24.1967L22.848 25.3496Z" fill="#F5841F"></path><path d="M13.2262 24.1967L13.336 27.381L17.3989 30.5654L18.0714 30.0987L17.1518 25.3496L13.2262 24.1967Z" fill="#F5841F"></path><path d="M22.9303 34.93L22.9715 33.6398L22.6284 33.3378H17.3714L17.042 33.6398L17.0694 34.93L12.6772 32.8574L14.2145 34.1202L17.3302 36.2751H22.6696L25.7853 34.1202L27.3226 32.8574L22.9303 34.93Z" fill="#C0AC9D"></path><path d="M22.601 30.5653L21.9284 30.0986H18.0715L17.3989 30.5653L17.0421 33.6399L17.3715 33.3379H22.6285L22.9716 33.6399L22.601 30.5653Z" fill="#161616"></path><path d="M36.5875 14.3003L37.7542 8.61779L36.011 3.33337L22.6009 13.2846L27.7618 17.6493L35.0365 19.7768L36.6424 17.8964L35.9424 17.3886L37.0679 16.3728L36.2169 15.7003L37.3287 14.863L36.5875 14.3003Z" fill="#763E1A"></path><path d="M2.24573 8.61779L3.42615 14.3003L2.67123 14.863L3.78302 15.7003L2.93202 16.3728L4.05753 17.3886L3.35752 17.8964L4.96343 19.7768L12.2518 17.6493L17.399 13.2846L4.00263 3.33337L2.24573 8.61779Z" fill="#763E1A"></path><path d="M35.0365 19.777L27.7619 17.6495L29.958 20.9712L26.6638 27.3811L31.0149 27.3262H37.4797L35.0365 19.777Z" fill="#F5841F"></path><path d="M12.2517 17.6495L4.96332 19.777L2.53386 27.3262H8.99869L13.336 27.3811L10.0419 20.9712L12.2517 17.6495Z" fill="#F5841F"></path><path d="M22.1205 21.3276L22.6009 13.2843L24.701 7.56067H15.2988L17.3988 13.2843L17.8792 21.3276L18.0577 23.8531L18.0714 30.0984H21.9283L21.9421 23.8531L22.1205 21.3276Z" fill="#F5841F"></path></svg> 
                         Add to MetaMask 
                         <svg viewBox="0 0 40 40" color="text" width="12px" xmlns="http://www.w3.org/2000/svg" class="sc-bdnxRM fbnJlb"><path d="M36.0112 3.33337L22.1207 13.6277L24.7012 7.56091L36.0112 3.33337Z" fill="#E17726"></path><path d="M4.00261 3.33337L17.7558 13.7238L15.2989 7.56091L4.00261 3.33337Z" fill="#E27625"></path><path d="M31.0149 27.2023L27.3227 32.8573L35.2287 35.0397L37.4797 27.3258L31.0149 27.2023Z" fill="#E27625"></path><path d="M2.53386 27.3258L4.77116 35.0397L12.6772 32.8573L8.9987 27.2023L2.53386 27.3258Z" fill="#E27625"></path><path d="M12.2518 17.6496L10.0419 20.9712L17.8793 21.3281L17.6048 12.8867L12.2518 17.6496Z" fill="#E27625"></path><path d="M27.762 17.6494L22.3129 12.7905L22.1207 21.3279L29.9581 20.9711L27.762 17.6494Z" fill="#E27625"></path><path d="M12.6772 32.8574L17.3989 30.5652L13.336 27.3809L12.6772 32.8574Z" fill="#E27625"></path><path d="M22.6009 30.5652L27.3226 32.8574L26.6637 27.3809L22.6009 30.5652Z" fill="#E27625"></path><path d="M27.3226 32.8575L22.6009 30.5653L22.9715 33.6399L22.9303 34.9301L27.3226 32.8575Z" fill="#D5BFB2"></path><path d="M12.6772 32.8575L17.0694 34.9301L17.042 33.6399L17.3989 30.5653L12.6772 32.8575Z" fill="#D5BFB2"></path><path d="M17.1518 25.3495L13.2262 24.1965L15.9988 22.92L17.1518 25.3495Z" fill="#233447"></path><path d="M22.848 25.3495L24.001 22.92L26.801 24.1965L22.848 25.3495Z" fill="#233447"></path><path d="M12.6773 32.8573L13.3635 27.2023L8.99876 27.3258L12.6773 32.8573Z" fill="#CC6228"></path><path d="M26.6364 27.2023L27.3227 32.8573L31.0149 27.3258L26.6364 27.2023Z" fill="#CC6228"></path><path d="M29.9581 20.9709L22.1207 21.3278L22.8482 25.3495L24.0011 22.92L26.8012 24.1965L29.9581 20.9709Z" fill="#CC6228"></path><path d="M13.2263 24.1965L15.9989 22.92L17.1519 25.3495L17.8793 21.3278L10.0419 20.9709L13.2263 24.1965Z" fill="#CC6228"></path><path d="M10.0419 20.9709L13.3361 27.3809L13.2263 24.1965L10.0419 20.9709Z" fill="#E27525"></path><path d="M26.8011 24.1965L26.6638 27.3809L29.958 20.9709L26.8011 24.1965Z" fill="#E27525"></path><path d="M17.8793 21.3278L17.1519 25.3494L18.0715 30.0985L18.2637 23.8396L17.8793 21.3278Z" fill="#E27525"></path><path d="M22.1205 21.3278L21.7499 23.8258L21.9283 30.0985L22.848 25.3494L22.1205 21.3278Z" fill="#E27525"></path><path d="M22.848 25.3496L21.9284 30.0987L22.601 30.5654L26.6638 27.381L26.8011 24.1967L22.848 25.3496Z" fill="#F5841F"></path><path d="M13.2262 24.1967L13.336 27.381L17.3989 30.5654L18.0714 30.0987L17.1518 25.3496L13.2262 24.1967Z" fill="#F5841F"></path><path d="M22.9303 34.93L22.9715 33.6398L22.6284 33.3378H17.3714L17.042 33.6398L17.0694 34.93L12.6772 32.8574L14.2145 34.1202L17.3302 36.2751H22.6696L25.7853 34.1202L27.3226 32.8574L22.9303 34.93Z" fill="#C0AC9D"></path><path d="M22.601 30.5653L21.9284 30.0986H18.0715L17.3989 30.5653L17.0421 33.6399L17.3715 33.3379H22.6285L22.9716 33.6399L22.601 30.5653Z" fill="#161616"></path><path d="M36.5875 14.3003L37.7542 8.61779L36.011 3.33337L22.6009 13.2846L27.7618 17.6493L35.0365 19.7768L36.6424 17.8964L35.9424 17.3886L37.0679 16.3728L36.2169 15.7003L37.3287 14.863L36.5875 14.3003Z" fill="#763E1A"></path><path d="M2.24573 8.61779L3.42615 14.3003L2.67123 14.863L3.78302 15.7003L2.93202 16.3728L4.05753 17.3886L3.35752 17.8964L4.96343 19.7768L12.2518 17.6493L17.399 13.2846L4.00263 3.33337L2.24573 8.61779Z" fill="#763E1A"></path><path d="M35.0365 19.777L27.7619 17.6495L29.958 20.9712L26.6638 27.3811L31.0149 27.3262H37.4797L35.0365 19.777Z" fill="#F5841F"></path><path d="M12.2517 17.6495L4.96332 19.777L2.53386 27.3262H8.99869L13.336 27.3811L10.0419 20.9712L12.2517 17.6495Z" fill="#F5841F"></path><path d="M22.1205 21.3276L22.6009 13.2843L24.701 7.56067H15.2988L17.3988 13.2843L17.8792 21.3276L18.0577 23.8531L18.0714 30.0984H21.9283L21.9421 23.8531L22.1205 21.3276Z" fill="#F5841F"></path></svg></button></div>
                     <div class="footer center container">
                         <a href="https://github.com/Steak-Token" target="_blank">Github</a> | <a href="https://twitter.com/steak_token" target="_blank">Twitter</a> | <a href="https://pancakeswap.info/tokens/0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81"
-                            target="_blank">PancakeSwap</a> | <a id="link-help">Help</a>
+                            target="_blank">PancakeSwap</a>
                     </div>
 
                     <div class="part100">
-                        <div class="part25"><a id="link-market">Market</a></div>
+                        <div class="part25"></div>
                         <div class="part25"></div>
                         <div class="part25 left"><a id="link-burn">🔥</a></div>
                         <div class="part25"></div>
@@ -78,19 +80,22 @@
                             <div><b>Buy STEAK</b></div>
                             <table class="center">
                                 <tr>
+                                    <td class="right">STEAK</td>
                                     <td>
                                         <input id="in-buy-steak" value="0" />
                                     </td>
-                                    <td>STEAK</td>
                                 </tr>
                                 <tr>
+                                    <td class="right">BNB Price</td>
                                     <td>
                                         <input id="in-buy-bnb" value="0" readonly />
                                     </td>
-                                    <td>BNB Price</td>
                                 </tr>
                             </table>
                             <div><button id="btn-exchange-go">Exchange</button></div>
+                        </p>
+                        <p>
+                            All BNB income from market is added to liquidity on PancakeSwap!
                         </p>
                     </div>
                     <div class="container"><button class="btn-home">Close</button></div>
@@ -100,10 +105,16 @@
                     <div class="border">
                         <div><b>What is STEAK?</b></div>
                         <div>Stake is a ERC20 token with staking function on the Binance Smart Chain. If you participate in staking and have some STAKE in your wallet, your STEAK will automatically stake over time.</div>
-                        <div>To get your staked token, you or someone else have to click the claim button.</div>
+                        <div>To get your staked token, you or someone else have to click the butcher button.</div>
                         <br>
-                        <div><b>Claim Button</b></div>
-                        <div>If you or someone else clicks on the claim button, all staker get rewarded with their staked token. Staked token will only cashed out trough the claim button.</div>
+                        <div><b>Butcher Button</b></div>
+                        <div>If you or someone else clicks on the butcher button, all staker get rewarded with their staked token. Staked token will only cashed out trough the butcher button.</div>
+                        <br>
+                        <div><b>🎮 Games</b></div>
+                        <div>Here are soon coming a bunch of mini-games you can play against other STEAKers, to win more STEAK!</div>
+                        <br>
+                        <div><b>🏧 Market</b></div>
+                        <div>On the market you can buy new STEAK directly with BNB. All income from market is added to the PancakeSwap Liquidity-Pool so you can always exchange your STEAK back to BNB.</div>
                         <br>
                         <div><b>🔥 Burn</b></div>
                         <div>If you think you got too much STEAK or if you are mad, you can burn your STEAK. Burned STEAK will be destroyed forever and irreversible, so think twice if you want burn your STEAK.</div>
@@ -111,7 +122,7 @@
                         <div><b>PancakeSwap</b></div>
                         <div>If you wish to exchange your STEAK, you can do this on <a href="https://pancakeswap.info/tokens/0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81" target="_blank">PancakeSwap</a>. All income that is generated flows into STEAK's liquidity!</div>
                     </div>
-                    <div class="container"><button id="link-close-help">Close</button></div>
+                    <div class="container"><button class="btn-home">Close</button></div>
                 </div>
 
                 <div id="screen-wrong-chain" class="center" hidden>
