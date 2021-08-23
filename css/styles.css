@@ -32,6 +32,11 @@ button {
     background-color: #fff;
 }
 
+#container-msg-testnet {
+    width: 100%;
+    background-color: #ffff00;
+}
+
 #container-contract,
 #container-address {
     font-size: x-small;

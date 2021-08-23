@@ -135,7 +135,12 @@ function isCorrectChain(id) {
         $("#container-header").show();
         $("#screen-connected").show();
         $("#screen-wrong-chain").hide();
-        if (id == TESTNET) switchNetworkOffer();
+        if (id == TESTNET) {
+            switchNetworkOffer();
+            $("#container-msg-testnet").show();
+        } else {
+            $("#container-msg-testnet").hide();
+        }
         return true;
     } else {
         $("#container-header").hide();
