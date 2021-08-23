@@ -1,12 +1,16 @@
-var screenConnected, screenHelp;
-var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance;
-var linkHelp, linkCloseHelp, linkBurn;
-var btnAdd, btnConnect, btnStake, btnClaim;
+var screenConnected, screenMarket, screenHelp;
+var containerTotal, containerWaitingComplete, containerWaiting, containerAddress, containerBalance, containerMarketTotal, containerExchangeValue;
+var linkHelp, btnHome, linkMarket, linkBurn;
+var btnAdd, btnConnect, btnStake, btnClaim, btnExchange;
+var inBuyingSteak, inBuyingBnb;
 
 var intervalClaim;
 
+var decimals = 1000000000000000000;
+
 async function initSteak() {
     screenConnected = $("#screen-connected");
+    screenMarket = $("#screen-market");
     screenHelp = $("#screen-help");
 
     containerTotal = $("#container-total");
@@ -14,15 +18,27 @@ async function initSteak() {
     containerWaiting = $("#container-waiting");
     containerAddress = $("#container-address");
     containerBalance = $("#container-balance");
+    containerMarketTotal = $("#container-market-total");
+    containerExchangeValue = $("#container-exchange-value");
+
+    inBuyingSteak = $("#in-buy-steak");
+    inBuyingBnb = $("#in-buy-bnb");
 
     btnAdd = $("#btn-add");
     btnConnect = $("#btn-connect");
     btnStake = $("#btn-stake");
     btnClaim = $("#btn-claim");
+    btnHome = $(".btn-home");
+    btnExchange = $("#btn-exchange-go");
 
     linkHelp = $("#link-help");
-    linkCloseHelp = $("#link-close-help");
+    linkMarket = $("#link-market");
     linkBurn = $("#link-burn");
+
+    linkMarket.on("click", function() {
+        screenConnected.hide();
+        screenMarket.show();
+    });
 
     linkBurn.on("click", function() {
         dialog.burn.show(selectedAccount);
@@ -37,8 +53,9 @@ async function initSteak() {
         screenHelp.show();
     });
 
-    linkCloseHelp.on("click", function() {
+    btnHome.on("click", function() {
         screenConnected.show();
+        screenMarket.hide();
         screenHelp.hide();
     });
 
@@ -77,7 +94,10 @@ async function initSteak() {
             containerWaiting.text((data - block) * (balance / total));
         });
 
-    }, 3000);
+        reloadMarketInfo();
+    }, 5000);
+
+    loadMarket();
 }
 
 function reloadSteak() {
@@ -86,13 +106,49 @@ function reloadSteak() {
     initSteak();
 }
 
+var marketBalanceSteak;
+var exchangeValue;
+
+async function reloadMarketInfo() {
+    marketBalanceSteak = await market.methods.getBalanceSTEAK().call();
+    containerMarketTotal.text(fixDecimals(marketBalanceSteak));
+
+    exchangeValue = await market.methods.getExchangeValue().call();
+    containerExchangeValue.text(exchangeValue);
+}
+
+async function loadMarket() {
+    await reloadMarketInfo();
+
+    function calcBnb() {
+        var bnbValue = inBuyingSteak.val() / exchangeValue;
+        if (bnbValue > 0.0000009) inBuyingBnb.val(bnbValue);
+        else inBuyingBnb.val("Steak amount to low");
+    };
+
+    inBuyingSteak.on("input", function() { calcBnb() });
+    inBuyingSteak.val("1000");
+    calcBnb();
+
+    btnExchange.on("click", async function() {
+        var sendValue = inBuyingBnb.val();
+        if (sendValue > 0) {
+            await market.methods.exchange().send({
+                from: selectedAccount,
+                value: Web3.utils.toWei(sendValue, "ether")
+            });
+            dialog.msg("Purchase successful!", "Your purchase has been successful and your STEAK has been sended!");
+        }
+    });
+}
+
 async function burn(amount) {
-    amount = amount * 1000000000000000000;
+    amount = amount * decimals;
     await steak.methods.burn(Web3.utils.toBN(amount)).send({
         from: selectedAccount
     });
 }
 
 function fixDecimals(balance) {
-    return Math.round(balance / 1000000000000000000);
+    return Math.round(balance / decimals);
 }

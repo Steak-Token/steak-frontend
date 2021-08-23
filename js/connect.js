@@ -21,6 +21,7 @@ var web3;
 // Address of the selected account
 var selectedAccount;
 var steak;
+var market;
 
 function init() {
     console.log("WalletConnectProvider is", WalletConnectProvider);
@@ -65,11 +66,10 @@ function init() {
  * Kick in the UI action after Web3modal dialog has chosen a provider
  */
 async function fetchAccountData() {
-    var steakAddress = contract.Steak.address;
-
     // Get a Web3 instance for the wallet
     web3 = new Web3(provider);
-    steak = new web3.eth.Contract(contract.Steak.abi, steakAddress);
+    steak = new web3.eth.Contract(contract.Steak.abi, contract.Steak.address);
+    market = new web3.eth.Contract(contract.Market.abi, contract.Market.address);
 
     steak.events.StakeOn(function(error, result) {
         if (!error) {

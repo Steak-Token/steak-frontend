@@ -89,6 +89,8 @@ button {
     text-align: center;
     align-content: center;
     align-self: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .warning {
