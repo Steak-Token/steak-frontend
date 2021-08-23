@@ -4,10 +4,11 @@
  * JavaScript code that interacts with the page and Web3 wallets
  */
 
-// Unpkg imports
+const MAINNET = "56";
+const TESTNET = "97";
+
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
-//const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
 
 // Web3modal instance
@@ -18,8 +19,11 @@ var provider;
 
 var web3;
 
+var chainId;
+
 // Address of the selected account
 var selectedAccount;
+
 var steak;
 var market;
 
@@ -68,8 +72,17 @@ function init() {
 async function fetchAccountData() {
     // Get a Web3 instance for the wallet
     web3 = new Web3(provider);
-    steak = new web3.eth.Contract(contract.Steak.abi, contract.Steak.address);
-    market = new web3.eth.Contract(contract.Market.abi, contract.Market.address);
+
+    // Get connected chain id from Ethereum node
+    chainId = await web3.eth.getChainId();
+
+    var addressSteak = contract.Steak.address;
+    var addressMarket = contract.Market.address;
+    if (chainId == TESTNET) addressSteak = contract.Steak.address_test;
+    if (chainId == TESTNET) addressMarket = contract.Market.address_test;
+
+    steak = new web3.eth.Contract(contract.Steak.abi, addressSteak);
+    market = new web3.eth.Contract(contract.Market.abi, addressMarket);
 
     steak.events.StakeOn(function(error, result) {
         if (!error) {
@@ -94,14 +107,12 @@ async function fetchAccountData() {
 
     console.log("Web3 instance is", web3);
 
-    // Get connected chain id from Ethereum node
-    const chainId = await web3.eth.getChainId();
     isCorrectChain(chainId);
 
     if (window.ethereum) {
-        window.ethereum.on('chainChanged', (chainId) => {
+        window.ethereum.on("chainChanged", (chainId) => {
             isCorrectChain(chainId);
-            console.log(chainId) // 0x38 if it's BSC
+            console.log(chainId)
         });
     }
 
@@ -119,41 +130,48 @@ async function fetchAccountData() {
     //document.querySelector("#btn-connect").style.display = "none";
 }
 
-async function isCorrectChain(id) {
-    if (id == "56") { // Productive
+function isCorrectChain(id) {
+    if (id == MAINNET || id == TESTNET) {
         $("#container-header").show();
         $("#screen-connected").show();
         $("#screen-wrong-chain").hide();
+        if (id == TESTNET) switchNetworkOffer();
         return true;
     } else {
         $("#container-header").hide();
         $("#screen-connected").hide();
         $("#screen-wrong-chain").show();
+        switchNetworkOffer();
+        return false;
+    }
+}
 
-        var params = [{ chainId: '56' }];
+async function switchNetworkOffer() {
+    try {
+        var params = [{ chainId: MAINNET }];
         if (window.ethereum) {
             await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
+                method: "wallet_switchEthereumChain",
                 params: params
             });
         }
-
-        return false;
+    } catch (e) {
+        console.log(e);
     }
 }
 
 async function addToken() {
     const tokenAddress = contract.Steak.address;
-    const tokenSymbol = 'STEAK';
+    const tokenSymbol = "STEAK";
     const tokenDecimals = 18;
-    const tokenImage = 'https://alkhemeia.de/steak/images/metamask-token-icon.png';
+    const tokenImage = "https://alkhemeia.de/steak/images/metamask-token-icon.png";
 
     try {
         // wasAdded is a boolean. Like any RPC method, an error may be thrown.
         const wasAdded = await ethereum.request({
-            method: 'wallet_watchAsset',
+            method: "wallet_watchAsset",
             params: {
-                type: 'ERC20', // Initially only supports ERC20, but eventually more!
+                type: "ERC20", // Initially only supports ERC20, but eventually more!
                 options: {
                     address: tokenAddress, // The address that the token is at.
                     symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
@@ -164,9 +182,9 @@ async function addToken() {
         });
 
         if (wasAdded) {
-            console.log('Thanks for your interest!');
+            console.log("Thanks for your interest!");
         } else {
-            console.log('Your loss!');
+            console.log("Your loss!");
         }
     } catch (error) {
         console.log(error);

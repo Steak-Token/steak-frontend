@@ -99,5 +99,6 @@ contract.Market = {
         }
     ],
 
+    address_test: "0xb2fDd055165c7ac66bf67dB9c6Bae33A70a74Dfa",
     address: "0x4A7D6522aAD6027fC4D3cdd72B76C8e36dcb6A09"
 };

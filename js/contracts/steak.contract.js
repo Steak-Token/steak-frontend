@@ -302,5 +302,6 @@ contract.Steak = {
         }
     ],
 
+    address_test: "0xCc21403a1967e3C9Fd108D141A43ca36919B7B27",
     address: "0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81"
 };
