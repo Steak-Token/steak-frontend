@@ -5,8 +5,11 @@ var contract = contract || {};
 contract.Market = {
     abi: [{
             "constant": false,
-            "inputs": [],
-            "name": "cashoutBNB",
+            "inputs": [{
+                "name": "_exchangeValue",
+                "type": "uint256"
+            }],
+            "name": "setExchangeValue",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -22,6 +25,18 @@ contract.Market = {
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "getBalanceBNB",
+            "outputs": [{
+                "name": "",
+                "type": "uint256"
+            }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [],
             "name": "exchange",
@@ -31,21 +46,37 @@ contract.Market = {
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [{
-                "name": "_exchangeValue",
+            "constant": true,
+            "inputs": [],
+            "name": "getExchangeValue",
+            "outputs": [{
+                "name": "",
                 "type": "uint256"
             }],
-            "name": "setExchangeValue",
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "cashoutBNB",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
         },
         {
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "fallback"
+            "constant": true,
+            "inputs": [],
+            "name": "getBalanceSTEAK",
+            "outputs": [{
+                "name": "",
+                "type": "uint256"
+            }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         },
         {
             "inputs": [{
@@ -62,40 +93,9 @@ contract.Market = {
             "type": "constructor"
         },
         {
-            "constant": true,
-            "inputs": [],
-            "name": "getBalanceBNB",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getBalanceSTEAK",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getExchangeValue",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "fallback"
         }
     ],
 

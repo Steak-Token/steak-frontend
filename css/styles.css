@@ -42,6 +42,10 @@ button {
     font-size: x-small;
 }
 
+#loading {
+    font-size: xx-small;
+}
+
 .footer {
     font-size: xx-small;
 }
@@ -88,6 +92,10 @@ button {
     text-align: left;
     align-content: left;
     align-self: auto;
+}
+
+.td-top {
+    vertical-align: top;
 }
 
 .center {

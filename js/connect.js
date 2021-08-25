@@ -24,8 +24,13 @@ var chainId;
 // Address of the selected account
 var selectedAccount;
 
+var addressSteak;
+var addressMarket;
+var addressLottery;
+
 var steak;
 var market;
+var lottery;
 
 function init() {
     console.log("WalletConnectProvider is", WalletConnectProvider);
@@ -76,13 +81,30 @@ async function fetchAccountData() {
     // Get connected chain id from Ethereum node
     chainId = await web3.eth.getChainId();
 
-    var addressSteak = contract.Steak.address;
-    var addressMarket = contract.Market.address;
+    addressSteak = contract.Steak.address;
+    addressMarket = contract.Market.address;
+    addressLottery = contract.Lottery.address;
     if (chainId == TESTNET) addressSteak = contract.Steak.address_test;
     if (chainId == TESTNET) addressMarket = contract.Market.address_test;
+    if (chainId == TESTNET) addressLottery = contract.Lottery.address_test;
 
     steak = new web3.eth.Contract(contract.Steak.abi, addressSteak);
     market = new web3.eth.Contract(contract.Market.abi, addressMarket);
+    lottery = new web3.eth.Contract(contract.Lottery.abi, addressLottery);
+
+    steak.events.Approval(function(error, result) {
+        if (!error) {
+            dialog.msg("Approved!", "Approval successful!");
+        } else
+            console.log(error);
+    });
+
+    steak.events.Transfer(function(error, result) {
+        if (!error) {
+
+        } else
+            console.log(error);
+    });
 
     steak.events.StakeOn(function(error, result) {
         if (!error) {
@@ -99,6 +121,27 @@ async function fetchAccountData() {
     });
 
     steak.events.Burned(function(error, result) {
+        if (!error) {
+            reloadSteak();
+        } else
+            console.log(error);
+    });
+
+    lottery.events.WinnerDeclared(function(error, result) {
+        if (!error) {
+            dialog.msg("Winner!", "Winner declared, starting new round!");
+        } else
+            console.log(error);
+    });
+
+    lottery.events.PlayerParticipated(function(error, result) {
+        if (!error) {
+            dialog.msg("Participated!", "You have successfully participated in this lottery round!");
+        } else
+            console.log(error);
+    });
+
+    lottery.events.NewRound(function(error, result) {
         if (!error) {
             reloadSteak();
         } else
