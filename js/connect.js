@@ -129,7 +129,7 @@ async function fetchAccountData() {
 
     lottery.events.WinnerDeclared(function(error, result) {
         if (!error) {
-            dialog.msg("Winner!", "Winner declared, starting new round!");
+            dialog.msg("Winner!", "Winner of this round is " + result.returnValues[0] + ", starting new round!");
         } else
             console.log(error);
     });
