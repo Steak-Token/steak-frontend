@@ -1,0 +1,571 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>STEAK</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <table style="width: 100%; height: 100%;" class="center">
+        <tr>
+            <td class="td-top">
+                <p>To convert your Version 1 Steak to Version 2, first approve the transfer of your old STEAK to the new contract by clicking:</p>
+                <button id="btn-approve">Approve</button>
+                <p>After approval click here to: </p>
+                <button id="btn-convert">Convert all</button>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript" src="js/external/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/external/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/external/aes.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@toruslabs/torus-embed"></script>
+    <!-- <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script> -->
+    <script type="text/javascript" src="js/contracts/steak.contract.js"></script>
+    <script type="text/javascript" src="js/contracts/market.contract.js"></script>
+    <script type="text/javascript" src="js/contracts/lottery.contract.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript">
+        const MAINNET = "56";
+        const TESTNET = "97";
+
+        const Web3Modal = window.Web3Modal.default;
+        const WalletConnectProvider = window.WalletConnectProvider.default;
+        const evmChains = window.evmChains;
+
+        // Web3modal instance
+        var web3Modal
+
+        // Chosen wallet provider given by the dialog window
+        var provider;
+
+        var web3;
+
+        var chainId;
+
+        // Address of the selected account
+        var selectedAccount;
+        var balance;
+
+        var addressSteak;
+        var steakV1, steak;
+
+        function init() {
+            console.log("WalletConnectProvider is", WalletConnectProvider);
+            //console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
+            console.log("window.ethereum is", window.ethereum);
+
+            // Check that the web page is run in a secure context,
+            // as otherwise MetaMask won't be available
+            if (location.protocol !== 'https:') {
+                // https://ethereum.stackexchange.com/a/62217/620
+                //const alert = document.querySelector("#alert-error-https");
+                //alert.style.display = "block";
+                //document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
+                //return;
+            }
+
+            // Tell Web3modal what providers we have available.
+            // Built-in web browser provider (only one can exist as a time)
+            // like MetaMask, Brave or Opera is added automatically by Web3modal
+            const providerOptions = {
+                walletconnect: {
+                    package: WalletConnectProvider,
+                    options: {
+                        rpc: {
+                            56: 'https://bsc-dataseed.binance.org/'
+                        }
+                    }
+                }
+            };
+
+            web3Modal = new Web3Modal({
+                cacheProvider: true, // optional
+                providerOptions, // required
+                disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
+            });
+
+            console.log("Web3Modal instance is", web3Modal);
+        }
+
+
+        /**
+         * Kick in the UI action after Web3modal dialog has chosen a provider
+         */
+        async function fetchAccountData() {
+            // Get a Web3 instance for the wallet
+            web3 = new Web3(provider);
+
+            // Get connected chain id from Ethereum node
+            chainId = await web3.eth.getChainId();
+
+            addressSteak = contract.Steak.address;
+            if (chainId == TESTNET) addressSteak = contract.Steak.address_test;
+
+            steak = new web3.eth.Contract(contract.Steak.abi, addressSteak);
+
+            console.log("Web3 instance is", web3);
+
+            isCorrectChain(chainId);
+
+            if (window.ethereum) {
+                window.ethereum.on("chainChanged", (chainId) => {
+                    isCorrectChain(chainId);
+                    console.log(chainId)
+                });
+            }
+
+            // Load chain information over an HTTP API
+            const chainData = evmChains.getChain(chainId);
+
+            // Get list of accounts of the connected wallet
+            const accounts = await web3.eth.getAccounts();
+
+            // MetaMask does not give you all accounts, only the selected account
+            console.log("Got accounts", accounts);
+            selectedAccount = accounts[0];
+
+            // Display fully loaded UI for wallet data
+            //document.querySelector("#btn-connect").style.display = "none";
+
+            initConvert();
+        }
+
+        function isCorrectChain(id) {
+            if (id == MAINNET || id == TESTNET) {
+                $("#container-header").show();
+                $("#screen-connected").show();
+                $("#screen-wrong-chain").hide();
+                if (id == TESTNET) {
+                    switchNetworkOffer();
+                    $("#container-msg-testnet").show();
+                } else {
+                    $("#container-msg-testnet").hide();
+                }
+                return true;
+            } else {
+                $("#container-header").hide();
+                $("#screen-connected").hide();
+                $("#screen-wrong-chain").show();
+                switchNetworkOffer();
+                return false;
+            }
+        }
+
+        async function switchNetworkOffer() {
+            try {
+                var params = [{
+                    chainId: MAINNET
+                }];
+                if (window.ethereum) {
+                    await window.ethereum.request({
+                        method: "wallet_switchEthereumChain",
+                        params: params
+                    });
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        async function addToken() {
+            const tokenAddress = addressSteak;
+            const tokenSymbol = "STEAK";
+            const tokenDecimals = 18;
+            const tokenImage = "https://alkhemeia.de/steak/images/metamask-token-icon.png";
+
+            try {
+                // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+                const wasAdded = await ethereum.request({
+                    method: "wallet_watchAsset",
+                    params: {
+                        type: "ERC20", // Initially only supports ERC20, but eventually more!
+                        options: {
+                            address: tokenAddress, // The address that the token is at.
+                            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+                            decimals: tokenDecimals, // The number of decimals in the token
+                            image: tokenImage, // A string url of the token logo
+                        },
+                    },
+                });
+
+                if (wasAdded) {
+                    console.log("Thanks for your interest!");
+                } else {
+                    console.log("Your loss!");
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function onConnect() {
+            console.log("Opening a dialog", web3Modal);
+            try {
+                provider = await web3Modal.connect();
+            } catch (e) {
+                console.log("Could not get a wallet connection", e);
+                return;
+            }
+
+            // Subscribe to accounts change
+            provider.on("accountsChanged", (accounts) => {
+                location.reload();
+            });
+
+            // Subscribe to chainId change
+            provider.on("chainChanged", (chainId) => {
+                if (isCorrectChain(chainId)) location.reload();
+            });
+
+            // Subscribe to networkId change
+            provider.on("networkChanged", (networkId) => {
+                location.reload();
+            });
+
+            await fetchAccountData(provider);
+        }
+
+        /**
+         * Disconnect wallet button pressed.
+         */
+        async function onDisconnect() {
+
+            console.log("Killing the wallet connection", provider);
+
+            // TODO: Which providers have close method?
+            if (provider.close) {
+                await provider.close();
+
+                // If the cached provider is not cleared,
+                // WalletConnect will default to the existing session
+                // and does not allow to re-scan the QR code with a new wallet.
+                // Depending on your use case you may want or want not his behavir.
+                await web3Modal.clearCachedProvider();
+                provider = null;
+            }
+
+            selectedAccount = null;
+
+            // Set the UI back to the initial state
+            //document.querySelector("#prepare").style.display = "block";
+            //document.querySelector("#connected").style.display = "none";
+        }
+
+        window.addEventListener('load', async() => {
+            init();
+            await onConnect();
+
+            $("#btn-approve").on("click", function() {
+                approve();
+            });
+
+            $("#btn-convert").on("click", function() {
+                convert();
+            });
+        });
+
+        async function initConvert() {
+            steakV1 = new web3.eth.Contract([{
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [{
+                    "name": "",
+                    "type": "string"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [{
+                    "name": "delegate",
+                    "type": "address"
+                }, {
+                    "name": "numTokens",
+                    "type": "uint256"
+                }],
+                "name": "approve",
+                "outputs": [{
+                    "name": "",
+                    "type": "bool"
+                }],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [{
+                    "name": "owner",
+                    "type": "address"
+                }, {
+                    "name": "buyer",
+                    "type": "address"
+                }, {
+                    "name": "numTokens",
+                    "type": "uint256"
+                }],
+                "name": "transferFrom",
+                "outputs": [{
+                    "name": "",
+                    "type": "bool"
+                }],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint8"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "claimBlock",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [],
+                "name": "stake",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "_totalSupply",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [{
+                    "name": "token",
+                    "type": "uint256"
+                }],
+                "name": "burn",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [],
+                "name": "claim",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [{
+                    "name": "account",
+                    "type": "address"
+                }],
+                "name": "isStaking",
+                "outputs": [{
+                    "name": "",
+                    "type": "bool"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [{
+                    "name": "tokenOwner",
+                    "type": "address"
+                }],
+                "name": "balanceOf",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [{
+                    "name": "",
+                    "type": "string"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [{
+                    "name": "receiver",
+                    "type": "address"
+                }, {
+                    "name": "numTokens",
+                    "type": "uint256"
+                }],
+                "name": "transfer",
+                "outputs": [{
+                    "name": "",
+                    "type": "bool"
+                }],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [{
+                    "name": "owner",
+                    "type": "address"
+                }, {
+                    "name": "delegate",
+                    "type": "address"
+                }],
+                "name": "allowance",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "name": "startSupply",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": true,
+                    "name": "tokenOwner",
+                    "type": "address"
+                }, {
+                    "indexed": true,
+                    "name": "spender",
+                    "type": "address"
+                }, {
+                    "indexed": false,
+                    "name": "tokens",
+                    "type": "uint256"
+                }],
+                "name": "Approval",
+                "type": "event"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": true,
+                    "name": "from",
+                    "type": "address"
+                }, {
+                    "indexed": true,
+                    "name": "to",
+                    "type": "address"
+                }, {
+                    "indexed": false,
+                    "name": "tokens",
+                    "type": "uint256"
+                }],
+                "name": "Transfer",
+                "type": "event"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": false,
+                    "name": "staker",
+                    "type": "address"
+                }],
+                "name": "StakeOn",
+                "type": "event"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": false,
+                    "name": "staker",
+                    "type": "address"
+                }],
+                "name": "Claimed",
+                "type": "event"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": false,
+                    "name": "staker",
+                    "type": "address"
+                }],
+                "name": "Burned",
+                "type": "event"
+            }], "0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81");
+
+            balance = await steakV1.methods.balanceOf(selectedAccount).call();
+        }
+
+        async function approve() {
+            try {
+                await steakV1.methods.approve(addressSteak, balance).send({
+                    from: selectedAccount
+                });
+            } catch (e) {}
+        }
+
+        async function convert() {
+            try {
+                await steak.methods.convert(balance).send({
+                    from: selectedAccount
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+
+</html>

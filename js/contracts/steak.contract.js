@@ -54,7 +54,7 @@ contract.Steak = {
                     "type": "address"
                 },
                 {
-                    "name": "buyer",
+                    "name": "receiver",
                     "type": "address"
                 },
                 {
@@ -97,29 +97,8 @@ contract.Steak = {
         },
         {
             "constant": false,
-            "inputs": [],
-            "name": "stake",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "_totalSupply",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": false,
             "inputs": [{
-                "name": "token",
+                "name": "numTokens",
                 "type": "uint256"
             }],
             "name": "burn",
@@ -140,13 +119,13 @@ contract.Steak = {
         {
             "constant": true,
             "inputs": [{
-                "name": "account",
+                "name": "tokenOwner",
                 "type": "address"
             }],
-            "name": "isStaking",
+            "name": "balanceOf",
             "outputs": [{
                 "name": "",
-                "type": "bool"
+                "type": "uint256"
             }],
             "payable": false,
             "stateMutability": "view",
@@ -154,11 +133,8 @@ contract.Steak = {
         },
         {
             "constant": true,
-            "inputs": [{
-                "name": "tokenOwner",
-                "type": "address"
-            }],
-            "name": "balanceOf",
+            "inputs": [],
+            "name": "newSteak",
             "outputs": [{
                 "name": "",
                 "type": "uint256"
@@ -177,6 +153,18 @@ contract.Steak = {
             }],
             "payable": false,
             "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [{
+                "name": "numTokens",
+                "type": "uint256"
+            }],
+            "name": "convert",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -220,8 +208,20 @@ contract.Steak = {
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "totalStakingSupply",
+            "outputs": [{
+                "name": "",
+                "type": "uint256"
+            }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "inputs": [{
-                "name": "startSupply",
+                "name": "_startSupply",
                 "type": "uint256"
             }],
             "payable": false,
@@ -277,16 +277,6 @@ contract.Steak = {
                 "name": "staker",
                 "type": "address"
             }],
-            "name": "StakeOn",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [{
-                "indexed": false,
-                "name": "staker",
-                "type": "address"
-            }],
             "name": "Claimed",
             "type": "event"
         },
@@ -302,6 +292,6 @@ contract.Steak = {
         }
     ],
 
-    address_test: "0xCc21403a1967e3C9Fd108D141A43ca36919B7B27",
-    address: "0xEe80b739b1d2ADec66AB567D53Cf10eB1985bE81"
+    address_test: "0x5EFE9f4496Ed34B4AAa01620219658D7138c7422",
+    address: "0x10f15964b523e0c3ef776a4f91e81c1b8c7c9001"
 };

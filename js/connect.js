@@ -106,13 +106,6 @@ async function fetchAccountData() {
             console.log(error);
     });
 
-    steak.events.StakeOn(function(error, result) {
-        if (!error) {
-            reloadSteak();
-        } else
-            console.log(error);
-    });
-
     steak.events.Claimed(function(error, result) {
         if (!error) {
             reloadSteak();
@@ -209,7 +202,7 @@ async function switchNetworkOffer() {
 }
 
 async function addToken() {
-    const tokenAddress = contract.Steak.address;
+    const tokenAddress = addressSteak;
     const tokenSymbol = "STEAK";
     const tokenDecimals = 18;
     const tokenImage = "https://alkhemeia.de/steak/images/metamask-token-icon.png";
