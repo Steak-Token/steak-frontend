@@ -18,7 +18,7 @@ dialog.burn.show = function(address) {
     });
 
     $("#btnBurnSubmit").click(function(event) {
-        burn($("#inBurn").val())
+        burn($("#inBurn").val().toString());
     });
 
     dialog.show();
