@@ -133,6 +133,7 @@ async function reloadMarketInfo() {
     containerMarketTotal.text(fixDecimals(marketBalanceSteak));
 
     exchangeValue = await market.methods.getExchangeValue().call();
+    exchangeValue = await market.methods.getExchangeValue().call();
     containerExchangeValue.text(exchangeValue);
 }
 

@@ -4,101 +4,91 @@ global.contracts = global.contracts || {};
 var contract = contract || {};
 contract.Market = {
     abi: [{
-            "constant": false,
+            "inputs": [{
+                    "internalType": "address payable",
+                    "name": "_owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_exchangeValue",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "stateMutability": "payable",
+            "type": "fallback"
+        },
+        {
             "inputs": [],
             "name": "cashoutBNB",
             "outputs": [],
-            "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
         },
         {
-            "constant": false,
             "inputs": [],
             "name": "cashoutSTEAK",
             "outputs": [],
-            "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
         },
         {
-            "constant": false,
             "inputs": [],
             "name": "exchange",
             "outputs": [],
-            "payable": true,
             "stateMutability": "payable",
             "type": "function"
         },
         {
-            "constant": false,
+            "inputs": [],
+            "name": "getBalanceBNB",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getBalanceSTEAK",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getExchangeValue",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "inputs": [{
+                "internalType": "uint256",
                 "name": "_exchangeValue",
                 "type": "uint256"
             }],
             "name": "setExchangeValue",
             "outputs": [],
-            "payable": false,
             "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "fallback"
-        },
-        {
-            "inputs": [{
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_exchangeValue",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getBalanceBNB",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getBalanceSTEAK",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getExchangeValue",
-            "outputs": [{
-                "name": "",
-                "type": "uint256"
-            }],
-            "payable": false,
-            "stateMutability": "view",
             "type": "function"
         }
     ],
 
     address_test: "0x79208EFe78c1A92E71207ded43aD6a483C4BEaE3",
-    address: "0x08eA5A876486B65010C99A5d95CcEd56E690b1E2"
+    address: "0x714b923751a8a2c4c596e3A6218a9E59f2Ed5A0A"
 };

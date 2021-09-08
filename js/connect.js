@@ -94,7 +94,7 @@ async function fetchAccountData() {
 
     steak.events.Approval(function(error, result) {
         if (!error) {
-            dialog.msg("Approved!", "Approval successful!");
+            
         } else
             console.log(error);
     });
